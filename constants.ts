@@ -26,14 +26,18 @@ export const CHART_DATA: ChartData[] = [
 ];
 
 export const SIDEBAR_ITEMS = [
-  { icon: 'LayoutDashboard', label: 'Dashboard', active: true },
-  { icon: 'Wallet', label: 'Accounts' },
-  { icon: 'FileText', label: 'Invoices' },
-  { icon: 'Building2', label: 'Entities' },
-  { icon: 'Store', label: 'Vendors' },
-  { icon: 'FolderOpen', label: 'Storage' },
-  { icon: 'AlertTriangle', label: 'Issues' },
-  { icon: 'BarChart3', label: 'Reports' },
-  { icon: 'Users', label: 'Team' },
-  { icon: 'Settings', label: 'Settings' },
+  { id: 'dashboard', icon: 'LayoutDashboard', label: 'Dashboard' },
+  { id: 'accounts', icon: 'Wallet', label: 'Accounts' },
+  { id: 'invoices', icon: 'FileText', label: 'Invoices' },
+  { id: 'reports', icon: 'BarChart3', label: 'Reports' },
+  { id: 'team', icon: 'Users', label: 'Team' },
+  { id: 'settings', icon: 'Settings', label: 'Settings' },
+];
+
+export const COMMANDS = [
+  { id: 'new-invoice', label: 'Create New Invoice', shortcut: 'N', category: 'Actions' },
+  { id: 'add-expense', label: 'Log Expense', shortcut: 'E', category: 'Actions' },
+  { id: 'export-report', label: 'Export PDF Report', shortcut: 'P', category: 'Reports' },
+  { id: 'go-dashboard', label: 'Go to Dashboard', category: 'Navigation' },
+  { id: 'go-settings', label: 'Go to Settings', category: 'Navigation' },
 ];

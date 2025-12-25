@@ -1,12 +1,10 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-const API_KEY = process.env.API_KEY || "";
-
 export const getFinancialAdvice = async (userPrompt: string, dashboardContext: any) => {
-  if (!API_KEY) return "API Key not configured. Please check environment variables.";
-
-  const ai = new GoogleGenAI({ apiKey: API_KEY });
+  /* Initializing client with direct process.env.API_KEY usage as per guidelines */
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  /* Using gemini-3-flash-preview for general text tasks as per guidelines */
   const model = "gemini-3-flash-preview";
 
   const systemInstruction = `
@@ -23,6 +21,7 @@ export const getFinancialAdvice = async (userPrompt: string, dashboardContext: a
   `;
 
   try {
+    /* Correct call to ai.models.generateContent with model name and contents */
     const response = await ai.models.generateContent({
       model: model,
       contents: userPrompt,
@@ -33,6 +32,7 @@ export const getFinancialAdvice = async (userPrompt: string, dashboardContext: a
       },
     });
 
+    /* Accessing response.text as a property */
     return response.text || "I'm sorry, I couldn't generate a response at this moment.";
   } catch (error) {
     console.error("Gemini Error:", error);
