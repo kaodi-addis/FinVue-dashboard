@@ -1,0 +1,7 @@
+{
+  "name": "FinVue Premium Dashboard",
+  "description": "A high-end SaaS financial management platform with integrated AI insights, real-time analytics, and automated expense tracking.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
