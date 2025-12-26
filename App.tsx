@@ -38,6 +38,7 @@ import CommandPalette from './components/CommandPalette';
 import AccountsPage from './components/AccountsPage';
 import InvoicesPage from './components/InvoicesPage';
 import SettingsPage from './components/SettingsPage';
+import ReportsPage from './components/ReportsPage';
 import { METRICS, CHART_DATA } from './constants';
 import { getFinancialAdvice } from './services/geminiService';
 
@@ -396,9 +397,10 @@ const App: React.FC = () => {
         {activePage === 'accounts' && <AccountsPage />}
         {activePage === 'invoices' && <InvoicesPage />}
         {activePage === 'settings' && <SettingsPage />}
+        {activePage === 'reports' && <ReportsPage />}
         
         {/* Simplified Placeholder for other pages */}
-        {activePage !== 'dashboard' && activePage !== 'accounts' && activePage !== 'invoices' && activePage !== 'settings' && (
+        {activePage !== 'dashboard' && activePage !== 'accounts' && activePage !== 'invoices' && activePage !== 'settings' && activePage !== 'reports' && (
            <div className="h-[60vh] flex flex-col items-center justify-center text-center p-6">
               <div className="w-20 h-20 bg-indigo-50 dark:bg-slate-800 rounded-[24px] flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 shadow-xl">
                 <Layers size={40} />
