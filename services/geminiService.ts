@@ -6,8 +6,9 @@ import { GoogleGenAI } from "@google/genai";
  */
 const handleAIError = async (error: any) => {
   const errorMsg = error?.message || "";
+  // Check for 404/Not Found which usually indicates a missing/invalid project key in this context
   if (errorMsg.includes("Requested entity was not found") || errorMsg.includes("404")) {
-    if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
+    if (window.aistudio) {
       await window.aistudio.openSelectKey();
       return true; // Key selection triggered
     }

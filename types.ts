@@ -22,3 +22,17 @@ export interface ChartData {
   revenue: number;
   expenses: number;
 }
+
+// Added AIStudio interface to ensure global compatibility with platform typings
+export interface AIStudio {
+  hasSelectedApiKey: () => Promise<boolean>;
+  openSelectKey: () => Promise<void>;
+}
+
+// Global interface extensions
+declare global {
+  interface Window {
+    // Fixed: Updated aistudio property to use the expected AIStudio type name
+    aistudio: AIStudio;
+  }
+}
