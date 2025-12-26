@@ -1,41 +1,53 @@
 
 import { GoogleGenAI } from "@google/genai";
 
+/**
+ * Handles potential API key errors and requests user to select a key if needed.
+ */
+const handleAIError = async (error: any) => {
+  const errorMsg = error?.message || "";
+  if (errorMsg.includes("Requested entity was not found") || errorMsg.includes("404")) {
+    if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
+      await window.aistudio.openSelectKey();
+      return true; // Key selection triggered
+    }
+  }
+  return false;
+};
+
 export const getFinancialAdvice = async (userPrompt: string, dashboardContext: any) => {
-  /* Initializing client with direct process.env.API_KEY usage as per guidelines */
+  // Guidelines: Create a new instance right before making an API call to ensure latest key
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  /* Using gemini-3-flash-preview for general text tasks as per guidelines */
   const model = "gemini-3-flash-preview";
 
   const systemInstruction = `
     You are a world-class financial analyst AI named FinVue Assistant. 
-    You have access to the user's current dashboard data:
+    Context:
     - Revenue: ${dashboardContext.revenue}
     - Expenses: ${dashboardContext.expenses}
     - Balance: ${dashboardContext.balance}
     - Transactions: ${dashboardContext.transactions}
 
-    Your goal is to provide concise, professional, and actionable financial advice. 
-    Use markdown formatting for clarity. Be encouraging but direct about financial health.
-    If the user asks for things outside finance, gently redirect them back to their business growth.
+    Provide concise, professional, and actionable financial advice in markdown.
   `;
 
   try {
-    /* Correct call to ai.models.generateContent with model name and contents */
     const response = await ai.models.generateContent({
       model: model,
       contents: userPrompt,
       config: {
         systemInstruction: systemInstruction,
         temperature: 0.7,
-        topP: 0.9,
       },
     });
 
-    /* Accessing response.text as a property */
-    return response.text || "I'm sorry, I couldn't generate a response at this moment.";
-  } catch (error) {
+    return response.text || "I'm sorry, I couldn't generate a response.";
+  } catch (error: any) {
     console.error("Gemini Error:", error);
-    return "Error connecting to FinVue AI. Please try again later.";
+    const reselecting = await handleAIError(error);
+    if (reselecting) {
+      return "API authentication required. Please select a valid API key from a paid project in the dialog that appeared.";
+    }
+    return "Error connecting to FinVue AI. Please check your connection or API key.";
   }
 };

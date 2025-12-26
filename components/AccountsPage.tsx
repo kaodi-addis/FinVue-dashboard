@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Landmark, Wallet, CreditCard, ArrowRight, Plus, MoreVertical, TrendingUp, TrendingDown, Search, Filter } from 'lucide-react';
+import { Landmark, Wallet, CreditCard, Plus, MoreVertical, TrendingUp, TrendingDown, Search, Filter } from 'lucide-react';
 
 const ACCOUNTS = [
   { id: '1', name: 'Commercial Bank of Ethiopia', type: 'Bank', balance: 'ETB 85,240.00', number: '**** 4592', color: 'indigo', trend: '+12%' },
@@ -9,7 +9,11 @@ const ACCOUNTS = [
   { id: '4', name: 'Investment Fund', type: 'Stocks', balance: 'ETB 450,000.00', number: 'ACC: 88721', color: 'violet', trend: '+18.5%' },
 ];
 
-const AccountsPage: React.FC = () => {
+interface AccountsPageProps {
+  onConnectAsset?: () => void;
+}
+
+const AccountsPage: React.FC<AccountsPageProps> = ({ onConnectAsset }) => {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
       <header className="mb-8 md:mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
@@ -25,8 +29,8 @@ const AccountsPage: React.FC = () => {
         <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
           <div className="flex bg-white dark:bg-slate-800 p-1 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm shrink-0">
             <button className="px-3 md:px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[9px] font-black uppercase tracking-widest rounded-xl transition-all">All</button>
-            <button className="px-3 md:px-4 py-2 text-slate-500 text-[9px] font-black uppercase tracking-widest rounded-xl hover:text-slate-900 dark:hover:text-white transition-all">Banks</button>
-            <button className="px-3 md:px-4 py-2 text-slate-500 text-[9px] font-black uppercase tracking-widest rounded-xl hover:text-slate-900 dark:hover:text-white transition-all">Credit</button>
+            <button className="px-3 md:px-4 py-2 text-slate-500 text-[9px] font-black uppercase tracking-widest rounded-xl transition-all">Banks</button>
+            <button className="px-3 md:px-4 py-2 text-slate-500 text-[9px] font-black uppercase tracking-widest rounded-xl transition-all">Credit</button>
           </div>
           <button className="p-3 bg-white dark:bg-slate-800 text-slate-500 border border-slate-100 dark:border-slate-700 rounded-2xl hover:text-indigo-600 transition-all shadow-sm shrink-0">
             <Filter size={18} />
@@ -55,7 +59,7 @@ const AccountsPage: React.FC = () => {
 
             <div className="space-y-1 mb-6">
               <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{account.type}</p>
-              <h3 className="text-base md:text-lg font-black text-slate-900 dark:text-white tracking-tight leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              <h3 className="text-base md:text-lg font-black text-slate-900 dark:text-white tracking-tight leading-tight group-hover:text-indigo-600 transition-colors">
                 {account.name}
               </h3>
               <p className="text-[10px] font-bold text-slate-400 dark:text-slate-600 tracking-widest">{account.number}</p>
@@ -68,7 +72,7 @@ const AccountsPage: React.FC = () => {
                   {account.balance}
                 </p>
               </div>
-              <div className={`flex items-center gap-1 text-[9px] font-black px-2 py-1 rounded-lg ${account.trend.startsWith('+') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20' : 'text-rose-600 bg-rose-50 dark:bg-rose-900/20'}`}>
+              <div className={`flex items-center gap-1 text-[9px] font-black px-2 py-1 rounded-lg ${account.trend.startsWith('+') ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'}`}>
                 {account.trend.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                 {account.trend}
               </div>
@@ -76,8 +80,11 @@ const AccountsPage: React.FC = () => {
           </div>
         ))}
 
-        <button className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-[32px] border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center gap-4 hover:border-indigo-400 dark:hover:border-indigo-600 transition-all group min-h-[160px]">
-          <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:rotate-90 transition-all shadow-sm">
+        <button 
+          onClick={onConnectAsset}
+          className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-[32px] border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center gap-4 hover:border-indigo-400 dark:hover:border-indigo-600 transition-all group min-h-[160px]"
+        >
+          <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:rotate-90 transition-all shadow-sm">
             <Plus size={20} />
           </div>
           <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Connect Asset</p>
@@ -93,7 +100,7 @@ const AccountsPage: React.FC = () => {
             </div>
             <div className="relative w-full sm:w-auto">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input type="text" placeholder="Filter log..." className="w-full sm:w-48 pl-9 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl text-[10px] outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all uppercase font-black" />
+              <input type="text" placeholder="Filter log..." className="w-full sm:w-48 pl-9 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl text-[10px] outline-none transition-all uppercase font-black" />
             </div>
           </div>
           <div className="overflow-x-auto">
@@ -132,42 +139,6 @@ const AccountsPage: React.FC = () => {
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-
-        <div className="lg:col-span-4 space-y-6">
-          <div className="bg-indigo-600 p-6 md:p-8 rounded-[32px] text-white shadow-xl shadow-indigo-100 dark:shadow-none relative overflow-hidden group">
-            <h3 className="text-[10px] font-black italic tracking-widest mb-1 uppercase text-indigo-200">TOTAL CAPITAL</h3>
-            <p className="text-3xl md:text-4xl font-black font-inter tracking-tighter mb-8">ETB 547.6K</p>
-            
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-[10px] font-bold text-indigo-100 uppercase tracking-widest">
-                <span>Credit Utilized</span>
-                <span>75%</span>
-              </div>
-              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-white w-3/4 rounded-full" />
-              </div>
-            </div>
-
-            <button className="mt-8 w-full py-3.5 bg-white text-indigo-600 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg hover:scale-[1.02] transition-all">
-              Withdrawal
-            </button>
-          </div>
-
-          <div className="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[32px] border border-slate-100 dark:border-slate-700 shadow-sm">
-            <h3 className="text-[11px] font-black italic tracking-tight text-slate-900 dark:text-white uppercase mb-6 tracking-widest">Security Protocol</h3>
-            <div className="space-y-3">
-              {[
-                { label: '2FA Status', status: 'ACTIVE', color: 'emerald' },
-                { label: 'Network', status: 'SECURED', color: 'indigo' },
-              ].map((s, i) => (
-                <div key={i} className="flex justify-between items-center p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/50">
-                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{s.label}</span>
-                  <span className={`text-[9px] font-black uppercase tracking-widest text-${s.color}-600 dark:text-${s.color}-400`}>{s.status}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
