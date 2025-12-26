@@ -51,7 +51,7 @@ const AIAssistant: React.FC = () => {
     return (
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 md:bottom-8 right-6 md:right-8 w-14 h-14 bg-indigo-600 text-white rounded-2xl shadow-xl shadow-indigo-200 dark:shadow-none hover:shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center z-[60] group"
+        className="fixed bottom-20 md:bottom-8 right-6 md:right-8 w-14 h-14 bg-indigo-600 text-white rounded-2xl shadow-xl shadow-indigo-200 dark:shadow-none hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center z-[60] group"
       >
         <Bot size={28} />
         <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 border-2 border-white dark:border-slate-900 rounded-full flex items-center justify-center animate-pulse">
@@ -100,7 +100,7 @@ const AIAssistant: React.FC = () => {
           )}
           <button 
             onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
-            className="p-1 hover:bg-slate-800 dark:hover:bg-slate-900 rounded transition-colors"
+            className="p-1 hover:bg-slate-800 dark:hover:bg-slate-900 rounded transition-colors active:scale-90"
           >
             <X size={16} />
           </button>
@@ -113,7 +113,7 @@ const AIAssistant: React.FC = () => {
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-900/50 custom-scrollbar">
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] p-4 rounded-2xl text-xs leading-relaxed prose-markdown ${
+                <div className={`max-w-[85%] p-4 rounded-2xl text-[13px] md:text-xs leading-relaxed prose-markdown ${
                   msg.role === 'user' 
                   ? 'bg-indigo-600 text-white rounded-tr-none shadow-lg shadow-indigo-200/20 dark:shadow-none' 
                   : 'bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 shadow-sm border border-slate-100 dark:border-slate-600 rounded-tl-none'
@@ -144,17 +144,17 @@ const AIAssistant: React.FC = () => {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Ask insights..."
-                className="w-full bg-slate-100 dark:bg-slate-900 border-none rounded-2xl py-3.5 pl-5 pr-14 text-xs font-medium focus:ring-2 focus:ring-indigo-500/50 dark:text-white transition-all outline-none"
+                className="w-full bg-slate-100 dark:bg-slate-900 border-none rounded-2xl py-4 md:py-3.5 pl-5 pr-14 text-base md:text-xs font-medium focus:ring-2 focus:ring-indigo-500/50 dark:text-white transition-all outline-none"
               />
               <button 
                 onClick={handleSend}
                 disabled={isLoading}
-                className="absolute right-2 top-1.5 w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-colors disabled:opacity-50 shadow-md"
+                className="absolute right-2 top-2 md:top-1.5 w-11 h-11 md:w-10 md:h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-colors disabled:opacity-50 shadow-md active:scale-95"
               >
                 <Send size={18} />
               </button>
             </div>
-            <p className="text-[9px] text-slate-400 dark:text-slate-500 mt-2 text-center uppercase font-black tracking-widest">
+            <p className="text-[9px] text-slate-400 dark:text-slate-500 mt-3 text-center uppercase font-black tracking-widest pb-2 md:pb-0">
               FinVue AI Engine v2.0
             </p>
           </div>

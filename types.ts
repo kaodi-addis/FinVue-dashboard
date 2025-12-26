@@ -23,16 +23,17 @@ export interface ChartData {
   expenses: number;
 }
 
-// Added AIStudio interface to ensure global compatibility with platform typings
-export interface AIStudio {
-  hasSelectedApiKey: () => Promise<boolean>;
-  openSelectKey: () => Promise<void>;
-}
-
 // Global interface extensions
 declare global {
+  // Added AIStudio interface to the global scope to resolve "same type" conflicts with platform definitions
+  interface AIStudio {
+    hasSelectedApiKey: () => Promise<boolean>;
+    openSelectKey: () => Promise<void>;
+  }
+
   interface Window {
-    // Fixed: Updated aistudio property to use the expected AIStudio type name
-    aistudio: AIStudio;
+    // Fixed: Added optionality (?) to ensure modifiers match existing global declarations
+    // and ensured the type refers to the global AIStudio interface.
+    aistudio?: AIStudio;
   }
 }

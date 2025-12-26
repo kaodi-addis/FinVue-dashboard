@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>FinVue | Financial Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -53,8 +53,24 @@
     <style>
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
+        /* Prevent elastic scroll/overscroll on mobile for app feel */
+        overscroll-behavior-y: none;
+        /* Disable double-tap zoom and tap highlight */
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
       }
       .font-inter { font-family: 'Inter', sans-serif; }
+      
+      /* Mobile optimization: Ensure inputs are at least 16px on focus to prevent iOS auto-zoom */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+      @media (min-width: 768px) {
+        input, select, textarea {
+          font-size: inherit !important;
+        }
+      }
+
       ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
@@ -71,6 +87,9 @@
       .prose-markdown ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
       .prose-markdown li { margin-bottom: 0.25rem; }
       .prose-markdown strong { font-weight: 700; color: inherit; }
+
+      /* Safe area insets for notched phones */
+      .safe-p-bottom { padding-bottom: env(safe-area-inset-bottom); }
     </style>
   <script type="importmap">
 {
@@ -88,7 +107,7 @@
 }
 </script>
 </head>
-  <body class="bg-[#f8fafc] dark:bg-slate-900 transition-colors duration-300">
+  <body class="bg-[#f8fafc] dark:bg-slate-900 transition-colors duration-300 antialiased selection:bg-indigo-100 dark:selection:bg-indigo-900/40">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
